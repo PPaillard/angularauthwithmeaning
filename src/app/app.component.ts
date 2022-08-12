@@ -7,6 +7,7 @@ import { AuthService } from './shared/auth.service';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
+  title = "angular-meanstack-authentication"
   constructor(public authService: AuthService) {}
 
   logout() {

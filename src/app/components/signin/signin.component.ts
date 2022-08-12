@@ -14,11 +14,10 @@ export class SigninComponent implements OnInit {
 
   constructor(
     public fb: FormBuilder,
-    public authService: AuthService,
-    public router: Router
+    public authService: AuthService
   ) {
     this.signinForm = this.fb.group({
-      email: [''],
+      username: [''],
       password: [''],
     });
   }

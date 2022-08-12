@@ -2,12 +2,12 @@
   <form class="form-signin" [formGroup]="signinForm" (ngSubmit)="loginUser()">
     <h3 class="h3 mb-3 font-weight-normal text-center">Please sign in</h3>
     <div class="form-group">
-      <label>Email</label>
+      <label>Username</label>
       <input
-        type="email"
+        type="text"
         class="form-control"
-        formControlName="email"
-        placeholder="Enter email"
+        formControlName="username"
+        placeholder="Enter username"
         required
       />
     </div>

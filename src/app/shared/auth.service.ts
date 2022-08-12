@@ -14,28 +14,22 @@ import { Router } from '@angular/router';
 })
 
 export class AuthService {
-  endpoint: string = 'http://localhost:4000/api';
-  headers = new HttpHeaders().set('Content-Type', 'application/json');
-  currentUser = {};
+  endpoint: string = 'http://localhost:8080';
 
   constructor(private http: HttpClient, public router: Router) {}
 
-  // Sign-up
+  // register
   signUp(user: User): Observable<any> {
-    let api = `${this.endpoint}/register-user`;
-    return this.http.post(api, user).pipe(catchError(this.handleError));
+    return this.http.post(`${this.endpoint}/auth/register`, user);
   }
 
-  // Sign-in
+  // login
   signIn(user: User) {
     return this.http
-      .post<any>(`${this.endpoint}/signin`, user)
+      .post<any>(`${this.endpoint}/auth/login`, user)
       .subscribe((res: any) => {
         localStorage.setItem('access_token', res.token);
-        this.getUserProfile(res._id).subscribe((res) => {
-          this.currentUser = res;
-          this.router.navigate(['user-profile/' + res.msg._id]);
-        });
+        this.router.navigate(['user-profile']);
       });
   }
 
@@ -56,26 +50,7 @@ export class AuthService {
   }
 
   // User profile
-  getUserProfile(id: any): Observable<any> {
-    let api = `${this.endpoint}/user-profile/${id}`;
-    return this.http.get(api, { headers: this.headers }).pipe(
-      map((res) => {
-        return res || {};
-      }),
-      catchError(this.handleError)
-    );
-  }
-
-  // Error
-  handleError(error: HttpErrorResponse) {
-    let msg = '';
-    if (error.error instanceof ErrorEvent) {
-      // client-side error
-      msg = error.error.message;
-    } else {
-      // server-side error
-      msg = `Error Code: ${error.status}\nMessage: ${error.message}`;
-    }
-    return throwError(msg);
+  getUserProfile(): Observable<any> {
+    return this.http.get(`${this.endpoint}/users/myprofil`)
   }
 }
